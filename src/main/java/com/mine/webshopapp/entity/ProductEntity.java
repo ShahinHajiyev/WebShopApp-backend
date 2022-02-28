@@ -47,14 +47,14 @@ public class ProductEntity {
     @CreationTimestamp
     private Date creationDate;
 
-    @Column(name="lastUpdate")                 //timestamp will  automatically be managed
+    @Column(name="lastUpdate")                 //timestamp will  automatically be managed by @....timeStamp annotation
     @UpdateTimestamp
     private Date lastUpdate;
 
 
     @ManyToOne
-    @JoinColumn(name = "product_category_id")
-    private ProductCategoryEntity productCategoryEntity;
+    @JoinColumn(name = "product_category_id", nullable = false)
+    private ProductCategoryEntity productCategory;
 
 
 }

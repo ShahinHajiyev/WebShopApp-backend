@@ -20,7 +20,7 @@ public class ProductCategoryEntity {
     @Column(name = "categoryName")
     private String categoryName;
 
-    @OneToMany(cascade= CascadeType.ALL, mappedBy = "productCategoryEntity")
+    @OneToMany(cascade= CascadeType.ALL, mappedBy = "productCategory")
     private Set<ProductEntity> products;
 
 
