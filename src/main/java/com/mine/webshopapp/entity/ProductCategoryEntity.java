@@ -21,7 +21,7 @@ public class ProductCategoryEntity {
     private String categoryName;
 
     @OneToMany(cascade= CascadeType.ALL, mappedBy = "productCategory")
-    private Set<ProductEntity> products;
+    private Set<ProductEntity> product;
 
 
 }
