@@ -14,13 +14,13 @@ public class ProductCategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productCategoryId")
-    private Long productCategoryId;
+    @Column(name = "categoryid")
+    private Long id;
 
     @Column(name = "categoryName")
     private String categoryName;
 
-    @OneToMany(cascade= CascadeType.ALL, mappedBy = "productCategory")
+    @OneToMany(cascade= CascadeType.ALL, mappedBy = "category")
     private Set<ProductEntity> product;
 
 

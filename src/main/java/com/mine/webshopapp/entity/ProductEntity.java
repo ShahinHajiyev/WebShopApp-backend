@@ -22,6 +22,10 @@ public class ProductEntity {
     @Column(name="productId")
     private Long productId;
 
+    @ManyToOne
+    @JoinColumn(name = "categoryId", nullable = false)
+    private ProductCategoryEntity category;
+
     @Column(name="sku")
     private String sku;
 
@@ -52,9 +56,7 @@ public class ProductEntity {
     private Date lastUpdate;
 
 
-    @ManyToOne
-    @JoinColumn(name = "product_category_id", nullable = false)
-    private ProductCategoryEntity productCategory;
+
 
 
 }
