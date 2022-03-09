@@ -15,6 +15,7 @@ import javax.persistence.metamodel.EntityType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Configuration
 public class DataRestConfiguration implements RepositoryRestConfigurer {
@@ -33,6 +34,7 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
+
         //RepositoryRestConfigurer.super.configureRepositoryRestConfiguration(config, cors);
 
         HttpMethod[] excludedRequests = {HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST};
@@ -50,10 +52,15 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
 
         //calling internal helper method
 
-        exposeId(config);
+        config.exposeIdsFor(entityManager.getMetamodel()
+                .getEntities().stream()
+                .map(e -> e.getJavaType())
+                .collect(Collectors.toList())
+                .toArray(new Class[0]));
+       //exposeId(config);
     }
 
-    private void exposeId(RepositoryRestConfiguration config) {
+/*    private void exposeId(RepositoryRestConfiguration config) {
 
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
 
@@ -65,5 +72,5 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
 
         Class[] domainTypes = entityClasses.toArray(new Class[0]);
         config.exposeIdsFor(domainTypes);
-    }
+    }*/
 }
