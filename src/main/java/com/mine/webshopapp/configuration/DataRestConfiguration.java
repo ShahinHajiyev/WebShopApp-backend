@@ -1,8 +1,10 @@
 package com.mine.webshopapp.configuration;
 
+import com.mine.webshopapp.entity.Country;
 import com.mine.webshopapp.entity.ProductCategoryEntity;
 import com.mine.webshopapp.entity.ProductEntity;
 
+import com.mine.webshopapp.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -39,25 +41,26 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
 
         HttpMethod[] excludedRequests = {HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST};
 
-        config.getExposureConfiguration()
-                .forDomainType(ProductEntity.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(excludedRequests))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(excludedRequests));
 
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategoryEntity.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(excludedRequests))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(excludedRequests));
+        disableHttpMethods(ProductEntity.class, config, excludedRequests);
+        disableHttpMethods(ProductCategoryEntity.class, config, excludedRequests);
+        disableHttpMethods(Country.class, config, excludedRequests);
+        disableHttpMethods(State.class, config, excludedRequests);
 
-
-        //calling internal helper method
 
         config.exposeIdsFor(entityManager.getMetamodel()
                 .getEntities().stream()
                 .map(e -> e.getJavaType())
                 .collect(Collectors.toList())
                 .toArray(new Class[0]));
-       //exposeId(config);
+
+    }
+
+    private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] excludedRequests) {
+        config.getExposureConfiguration()
+                .forDomainType(theClass)
+                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(excludedRequests))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(excludedRequests));
     }
 
 /*    private void exposeId(RepositoryRestConfiguration config) {
