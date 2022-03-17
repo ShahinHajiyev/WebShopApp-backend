@@ -6,6 +6,7 @@ import com.mine.webshopapp.entity.ProductEntity;
 
 import com.mine.webshopapp.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -25,6 +26,9 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
     //Class to make app READ-only
     //we just excluding some request types
 
+    @Value("${allowed.origins}")
+    private String[] allowedOrigins;
+
     private EntityManager entityManager;
 
     @Autowired
@@ -39,7 +43,7 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
 
         //RepositoryRestConfigurer.super.configureRepositoryRestConfiguration(config, cors);
 
-        HttpMethod[] excludedRequests = {HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST};
+        HttpMethod[] excludedRequests = {HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST, HttpMethod.PATCH};
 
 
         disableHttpMethods(ProductEntity.class, config, excludedRequests);
@@ -53,6 +57,9 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
                 .map(e -> e.getJavaType())
                 .collect(Collectors.toList())
                 .toArray(new Class[0]));
+
+        //cors mapping
+        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
 
     }
 
