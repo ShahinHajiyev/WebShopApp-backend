@@ -1,10 +1,7 @@
 package com.mine.webshopapp.configuration;
 
-import com.mine.webshopapp.entity.Country;
-import com.mine.webshopapp.entity.ProductCategoryEntity;
-import com.mine.webshopapp.entity.ProductEntity;
+import com.mine.webshopapp.entity.*;
 
-import com.mine.webshopapp.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -50,6 +47,7 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
         disableHttpMethods(ProductCategoryEntity.class, config, excludedRequests);
         disableHttpMethods(Country.class, config, excludedRequests);
         disableHttpMethods(State.class, config, excludedRequests);
+        disableHttpMethods(Order.class, config, excludedRequests);
 
 
         config.exposeIdsFor(entityManager.getMetamodel()
@@ -66,8 +64,8 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
     private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] excludedRequests) {
         config.getExposureConfiguration()
                 .forDomainType(theClass)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(excludedRequests))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(excludedRequests));
+                .withItemExposure((metadata, httpMethods) -> httpMethods.disable(excludedRequests))
+                .withCollectionExposure((metadata, httpMethods) -> httpMethods.disable(excludedRequests));
     }
 
 /*    private void exposeId(RepositoryRestConfiguration config) {
