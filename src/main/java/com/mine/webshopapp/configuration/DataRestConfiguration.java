@@ -24,7 +24,7 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
     //we just excluding some request types
 
     @Value("${allowed.origins}")
-    private String[] allowedOrigins;
+    private String[] theAllowedOrigins;
 
     private EntityManager entityManager;
 
@@ -57,7 +57,9 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
                 .toArray(new Class[0]));
 
         //cors mapping
-        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
+
+
+        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(theAllowedOrigins);
 
     }
 

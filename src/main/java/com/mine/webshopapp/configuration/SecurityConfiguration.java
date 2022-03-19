@@ -1,3 +1,5 @@
+
+
 package com.mine.webshopapp.configuration;
 
 
@@ -12,18 +14,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        // protect endpoint /api/orders
+
+
+     // protect endpoint /api/orders
         http.authorizeRequests()
+
                 .antMatchers("/api/orders/**")
                 .authenticated()
                 .and()
                 .oauth2ResourceServer()
                 .jwt();
 
-        // cors filters
-        http.cors();
+
+
 
         //response message for code 401
         Okta.configureResourceServer401ResponseBody(http);
+
+
+        // cors filters
+        http.cors();
+
+        //disable csrf because cookies is not used for session tracking
+        http.csrf().disable();
+
+
     }
+
 }
+
+
