@@ -18,6 +18,18 @@
 	</properties>
 	<dependencies>
 
+		<!--
+  For Maven, add the following dependency to your POM and replace {VERSION} with the
+  version number you want to use from
+  - https://mvnrepository.com/artifact/com.stripe/stripe-java or
+  - https://github.com/stripe/stripe-java/releases/latest
+-->
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>20.80.0</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.okta.spring/okta-spring-boot-starter -->
 		<dependency>
 			<groupId>com.okta.spring</groupId>
