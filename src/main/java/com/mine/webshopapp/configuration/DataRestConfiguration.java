@@ -56,6 +56,8 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
                 .collect(Collectors.toList())
                 .toArray(new Class[0]));
 
+
+
         //cors mapping
 
 
@@ -63,12 +65,14 @@ public class DataRestConfiguration implements RepositoryRestConfigurer {
 
     }
 
+    //disable methods for the given class item or collection
     private void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] excludedRequests) {
         config.getExposureConfiguration()
                 .forDomainType(theClass)
                 .withItemExposure((metadata, httpMethods) -> httpMethods.disable(excludedRequests))
                 .withCollectionExposure((metadata, httpMethods) -> httpMethods.disable(excludedRequests));
     }
+
 
 /*    private void exposeId(RepositoryRestConfiguration config) {
 
